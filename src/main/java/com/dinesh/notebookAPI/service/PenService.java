@@ -13,4 +13,6 @@ public interface PenService {
     List<Pen> getAllPens();
 
     void deletePenById(Long penId);
+
+    Pen updatePen(Long penId, Pen pen);
 }

@@ -1,5 +1,6 @@
 package com.dinesh.notebookAPI.controller;
 
+import com.dinesh.notebookAPI.dto.NoteDTO;
 import com.dinesh.notebookAPI.entity.Note;
 import com.dinesh.notebookAPI.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class NoteController {
@@ -16,42 +16,44 @@ public class NoteController {
     @Autowired
     private NoteService noteService;
 
-    @PostMapping("createNote")
-    public ResponseEntity<Note> create(@RequestBody Note note){
-//        Note saveNote = noteService.createNote(note);
+    private NoteDTO noteDTO;
 
-        return ResponseEntity.status(HttpStatus.CREATED).
-                body(noteService.createNote(note));
+    @PostMapping("/createNote")
+    public ResponseEntity<NoteDTO> create(@RequestBody NoteDTO noteDTO){
+
+        NoteDTO savedNote = noteService.createNote(noteDTO);
+
+        return ResponseEntity.ok(savedNote);
     }
 
-    @GetMapping("allNotes")
-    public ResponseEntity<List<Note>> get(){
+    @GetMapping("/allNotes")
+    public ResponseEntity<List<NoteDTO>> get(){
 
-        List<Note> notes = noteService.getAllNote();
+        List<NoteDTO> noteDTOs = noteService.getAllNote();
 
-        return ResponseEntity.status(HttpStatus.FOUND).body(notes);
+        return ResponseEntity.status(HttpStatus.FOUND).body(noteDTOs);
     }
 
-    @GetMapping("notes/{id}")
-    public ResponseEntity<Optional<Note>> getSingle(@PathVariable Long id){
+    @GetMapping("/notes/{id}")
+    public ResponseEntity<NoteDTO> getSingle(@PathVariable Long id){
 
-        Optional<Note> note = noteService.getSingleNote(id);
+        NoteDTO noteDTO = noteService.getSingleNote(id);
 
-        return ResponseEntity.status(HttpStatus.FOUND).body(note);
+        return ResponseEntity.status(HttpStatus.FOUND).body(noteDTO);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteSingle(@PathVariable Long id){
         noteService.deleteNote(id);
         return ResponseEntity.ok("Note Deleted Successfully!");
     }
 
-    @PutMapping("update/{id}")
-    public ResponseEntity<Note> update(@PathVariable Long id,@RequestBody Note newNote){
+    @PutMapping("/update/{id}")
+    public ResponseEntity<NoteDTO> update(@PathVariable Long id, @RequestBody Note newNote){
 
-        Note note = noteService.updateNote(id,newNote);
+        NoteDTO noteDTO = noteService.updateNote(id, newNote);
 
-        return ResponseEntity.status(HttpStatus.OK).body(note);
+        return ResponseEntity.status(HttpStatus.OK).body(noteDTO);
     }
 
 }

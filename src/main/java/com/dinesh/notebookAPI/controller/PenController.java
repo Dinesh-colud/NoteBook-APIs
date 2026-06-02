@@ -2,6 +2,7 @@ package com.dinesh.notebookAPI.controller;
 
 import com.dinesh.notebookAPI.entity.Pen;
 import com.dinesh.notebookAPI.service.PenService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class PenController {
     private PenService penService;
 
     @PostMapping("/pens")
-    public ResponseEntity<Pen> createPen(@RequestBody Pen pen){
+    public ResponseEntity<Pen> createPen(@Valid @RequestBody Pen pen){
         Pen pen1 = penService.createPen(pen);
         return new ResponseEntity<>(pen1, HttpStatus.CREATED);
     }
@@ -38,6 +39,14 @@ public class PenController {
     public ResponseEntity<String> deletePens(@PathVariable Long penId){
         penService.deletePenById(penId);
         return ResponseEntity.ok().body("Note Deleted Successfully!!");
+    }
+
+    @PutMapping("/updatepen/{penId}")
+    public ResponseEntity<Pen> updatePen(@PathVariable Long penId,
+                                         @RequestBody Pen pen){
+        Pen pen1 = penService.updatePen(penId, pen);
+
+        return new ResponseEntity<>(pen1, HttpStatus.OK);
     }
 
 }
