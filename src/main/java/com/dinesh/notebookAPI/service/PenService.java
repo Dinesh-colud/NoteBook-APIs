@@ -1,18 +1,19 @@
 package com.dinesh.notebookAPI.service;
 
+import com.dinesh.notebookAPI.dto.PenDTO;
 import com.dinesh.notebookAPI.entity.Pen;
 
 import java.util.List;
 
 public interface PenService {
     
-    Pen createPen(Pen pen);
+    PenDTO createPen(PenDTO penDTO);
 
-    Pen getSinglePen(Long penId);
+    PenDTO getSinglePen(Long penId);
 
-    List<Pen> getAllPens();
+    List<PenDTO> getAllPens();
 
     void deletePenById(Long penId);
 
-    Pen updatePen(Long penId, Pen pen);
+    PenDTO updatePen(Long penId, PenDTO pen);
 }

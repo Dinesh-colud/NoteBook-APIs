@@ -7,9 +7,7 @@ import com.dinesh.notebookAPI.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class NoteServiceImpl implements NoteService {
@@ -82,7 +80,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public NoteDTO updateNote(Long id, Note newNote) {
+    public NoteDTO updateNote(Long id, NoteDTO newNote) {
 
         Note exitingNote = noteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Id not found with id: "+id));

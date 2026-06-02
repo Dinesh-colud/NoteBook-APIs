@@ -1,5 +1,6 @@
 package com.dinesh.notebookAPI.serviceImpl;
 
+import com.dinesh.notebookAPI.dto.PenDTO;
 import com.dinesh.notebookAPI.entity.Pen;
 import com.dinesh.notebookAPI.repository.PenRepository;
 import com.dinesh.notebookAPI.service.PenService;
@@ -15,22 +16,63 @@ public class PenServiceImpl implements PenService {
     private PenRepository penRepository;
 
     @Override
-    public Pen createPen(Pen pen) {
+    public PenDTO createPen(PenDTO penDTO) {
 
-        return penRepository.save(pen);
+        Pen pen = new Pen();
+
+        pen.setColor(penDTO.getColor());
+        pen.setBrand(penDTO.getBrand());
+        pen.setPrice(penDTO.getPrice());
+        pen.setType(penDTO.getType());
+
+        Pen pen1 = penRepository.save(pen);
+
+        PenDTO response = new PenDTO();
+
+        response.setId(pen1.getId());
+        response.setColor(pen1.getColor());
+        response.setBrand(pen1.getBrand());
+        response.setPrice(pen1.getPrice());
+        response.setType(pen1.getType());
+
+        return response;
     }
 
     @Override
-    public Pen getSinglePen(Long penId) {
+    public PenDTO getSinglePen(Long penId) {
 
-        return penRepository.findById(penId)
+        Pen pen1 = penRepository.findById(penId)
                 .orElseThrow(() -> new RuntimeException("Pen not found with id: "+penId));
+
+        Pen pens = penRepository.save(pen1);
+
+        PenDTO response = new PenDTO();
+
+        response.setId(pens.getId());
+        response.setColor(pens.getColor());
+        response.setPrice(pens.getPrice());
+        response.setBrand(pens.getBrand());
+        response.setType(pens.getType());
+
+        return response;
+
     }
 
     @Override
-    public List<Pen> getAllPens() {
+    public List<PenDTO> getAllPens() {
 
-        return penRepository.findAll();
+        List<Pen> pens = penRepository.findAll();
+
+        return pens.stream().map(pen -> {
+            PenDTO dto = new PenDTO();
+            dto.setId(pen.getId());
+            dto.setColor(pen.getColor());
+            dto.setBrand(pen.getBrand());
+            dto.setPrice(pen.getPrice());
+            dto.setType(pen.getType());
+
+            return dto;
+        }).toList();
     }
 
     @Override
@@ -38,20 +80,40 @@ public class PenServiceImpl implements PenService {
         Pen pen = penRepository.findById(penId)
                 .orElseThrow(() -> new RuntimeException("Not found id: "+penId));
         penRepository.delete(pen);
+
+        PenDTO dto = new PenDTO();
+        dto.setId(pen.getId());
+        dto.setColor(pen.getColor());
+        dto.setBrand(pen.getBrand());
+        dto.setPrice(pen.getPrice());
+        dto.setType(pen.getType());
+
     }
 
     @Override
-    public Pen updatePen(Long penId, Pen pen) {
+    public PenDTO updatePen(Long penId, PenDTO pen) {
 
         Pen pen1 = penRepository.findById(penId)
                 .orElseThrow(() -> new RuntimeException("Pen not found with id: "+penId));
 
+        //        pen1.setId(pen.getId());
         pen1.setColor(pen.getColor());
         pen1.setBrand(pen.getBrand());
         pen1.setPrice(pen.getPrice());
         pen1.setType(pen.getType());
 
-        return penRepository.save(pen1);
+        Pen pens = penRepository.save(pen1);
+
+        PenDTO dto = new PenDTO();
+
+
+        dto.setId(pens.getId());
+        dto.setColor(pens.getColor());
+        dto.setBrand(pens.getBrand());
+        dto.setPrice(pens.getPrice());
+        dto.setType(pens.getType());
+
+        return dto;
     }
 
 }

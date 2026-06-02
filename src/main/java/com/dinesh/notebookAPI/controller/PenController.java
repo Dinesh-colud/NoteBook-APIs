@@ -1,5 +1,6 @@
 package com.dinesh.notebookAPI.controller;
 
+import com.dinesh.notebookAPI.dto.PenDTO;
 import com.dinesh.notebookAPI.entity.Pen;
 import com.dinesh.notebookAPI.service.PenService;
 import jakarta.validation.Valid;
@@ -17,22 +18,25 @@ public class PenController {
     @Autowired
     private PenService penService;
 
+    private PenDTO penDTO;
+
     @PostMapping("/pens")
-    public ResponseEntity<Pen> createPen(@Valid @RequestBody Pen pen){
-        Pen pen1 = penService.createPen(pen);
+    public ResponseEntity<PenDTO> createPen(@Valid @RequestBody PenDTO penDTO){
+        PenDTO pen1 = penService.createPen(penDTO);
+
         return new ResponseEntity<>(pen1, HttpStatus.CREATED);
     }
 
     @GetMapping("/getpen/{penId}")
-    public ResponseEntity<Pen> getSinglePen(@PathVariable Long penId){
-        Pen pen = penService.getSinglePen(penId);
+    public ResponseEntity<PenDTO> getSinglePen(@PathVariable Long penId){
+        PenDTO pen = penService.getSinglePen(penId);
         return new ResponseEntity<>(pen, HttpStatus.FOUND);
     }
 
     @GetMapping("/getpens")
-    public ResponseEntity<List<Pen>> getAllPens(){
-        List<Pen> pens = penService.getAllPens();
-        return new ResponseEntity<>(pens, HttpStatus.OK);
+    public ResponseEntity<List<PenDTO>> getAllPens(){
+        List<PenDTO> pens = penService.getAllPens();
+        return ResponseEntity.ok().body(pens);
     }
 
     @DeleteMapping("/deletepen/{penId}")
@@ -42,9 +46,9 @@ public class PenController {
     }
 
     @PutMapping("/updatepen/{penId}")
-    public ResponseEntity<Pen> updatePen(@PathVariable Long penId,
-                                         @RequestBody Pen pen){
-        Pen pen1 = penService.updatePen(penId, pen);
+    public ResponseEntity<PenDTO> updatePen(@PathVariable Long penId,
+                                         @RequestBody PenDTO pen){
+        PenDTO pen1 = penService.updatePen(penId, pen);
 
         return new ResponseEntity<>(pen1, HttpStatus.OK);
     }

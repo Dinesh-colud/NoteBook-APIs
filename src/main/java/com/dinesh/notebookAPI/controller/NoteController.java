@@ -1,7 +1,6 @@
 package com.dinesh.notebookAPI.controller;
 
 import com.dinesh.notebookAPI.dto.NoteDTO;
-import com.dinesh.notebookAPI.entity.Note;
 import com.dinesh.notebookAPI.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,7 +48,7 @@ public class NoteController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<NoteDTO> update(@PathVariable Long id, @RequestBody Note newNote){
+    public ResponseEntity<NoteDTO> update(@PathVariable Long id, @RequestBody NoteDTO newNote){
 
         NoteDTO noteDTO = noteService.updateNote(id, newNote);
 
