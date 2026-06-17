@@ -17,6 +17,12 @@ public class NoteController {
 
     private NoteDTO noteDTO;
 
+    @GetMapping("/dinesh")
+    public String hello(){
+
+        return "Hello Dinesh!";
+    }
+
     @PostMapping("/createNote")
     public ResponseEntity<NoteDTO> create(@RequestBody NoteDTO noteDTO){
 
