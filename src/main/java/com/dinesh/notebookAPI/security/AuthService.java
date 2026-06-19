@@ -21,6 +21,8 @@ public class AuthService {
 
     private final AuthenticationManager authenticationManager;
 
+    private final JwtUtils jwtUtils;
+
     public String requestUser(SignupRequest request){
         if (userRepository.existsByUsername(request.getUsername())){
 
@@ -53,7 +55,7 @@ public class AuthService {
         );
 
         if(authentication.isAuthenticated()){
-            return "Login successful";
+            return jwtUtils.generateJwtToken(request.getUsername());
         }
 
         return "Login Failed";
