@@ -2,6 +2,8 @@ package com.dinesh.notebookAPI.controller;
 
 import com.dinesh.notebookAPI.dto.NoteDTO;
 import com.dinesh.notebookAPI.service.NoteService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ public class NoteController {
     private NoteDTO noteDTO;
 
     @PostMapping("/createNote")
+    @Tag(name = "Note APIs", description = "Operations related to notes")
+    @Operation(description = "Create", summary = "API to create a notebook")
     public ResponseEntity<NoteDTO> create(@RequestBody NoteDTO noteDTO){
 
         NoteDTO savedNote = noteService.createNote(noteDTO);
@@ -27,6 +31,8 @@ public class NoteController {
     }
 
     @GetMapping("/allNotes")
+    @Tag(name = "Note APIs", description = "Operations related to notes")
+    @Operation(description = "Get All Notes", summary = "API to get all notes")
     public ResponseEntity<List<NoteDTO>> get(){
 
         List<NoteDTO> noteDTOs = noteService.getAllNote();
@@ -35,6 +41,8 @@ public class NoteController {
     }
 
     @GetMapping("/notes/{id}")
+    @Tag(name = "Note APIs", description = "Operations related to notes")
+    @Operation(description = "Get Single Note", summary = "API to get single note by id")
     public ResponseEntity<NoteDTO> getSingle(@PathVariable Long id){
 
         NoteDTO noteDTO = noteService.getSingleNote(id);
@@ -43,12 +51,16 @@ public class NoteController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @Tag(name = "Note APIs", description = "Operations related to notes")
+    @Operation(description = "Delete Note", summary = "API to delete note")
     public ResponseEntity<String> deleteSingle(@PathVariable Long id){
         noteService.deleteNote(id);
         return ResponseEntity.ok("Note Deleted Successfully!");
     }
 
     @PutMapping("/update/{id}")
+    @Operation(description = "Update Note", summary = "API to update note")
+    @Tag(name = "Note APIs", description = "Operations related to notes")
     public ResponseEntity<NoteDTO> update(@PathVariable Long id, @RequestBody NoteDTO newNote){
 
         NoteDTO noteDTO = noteService.updateNote(id, newNote);
