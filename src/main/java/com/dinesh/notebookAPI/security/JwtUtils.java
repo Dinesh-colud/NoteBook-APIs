@@ -16,9 +16,9 @@ public class JwtUtils {
     private String jwtSecret;
 
     @Value("${jwt.expiration}")
-    private int jwtExpirationMs;
+    private long jwtExpirationMs;
 
-    // Convert String into JWT Singing key
+    // Convert String into JWT Signing Key
     private SecretKey key() {
         return Keys.hmacShaKeyFor(
                 jwtSecret.getBytes(StandardCharsets.UTF_8)
@@ -46,6 +46,8 @@ public class JwtUtils {
                 .getPayload()
                 .getSubject();
     }
+
+
 
     // Token Validation
     public boolean validateJwtToken(String token){

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/pens")
 public class PenController {
 
     @Autowired
@@ -20,7 +20,7 @@ public class PenController {
 
     private PenDTO penDTO;
 
-    @PostMapping("/pens")
+    @PostMapping("/create")
     public ResponseEntity<PenDTO> createPen(@Valid @RequestBody PenDTO penDTO){
         PenDTO pen1 = penService.createPen(penDTO);
 
@@ -33,19 +33,19 @@ public class PenController {
         return new ResponseEntity<>(pen, HttpStatus.FOUND);
     }
 
-    @GetMapping("/getpens")
+    @GetMapping("/getall")
     public ResponseEntity<List<PenDTO>> getAllPens(){
         List<PenDTO> pens = penService.getAllPens();
         return ResponseEntity.ok().body(pens);
     }
 
-    @DeleteMapping("/deletepen/{penId}")
+    @DeleteMapping("/delete/{penId}")
     public ResponseEntity<String> deletePens(@PathVariable Long penId){
         penService.deletePenById(penId);
         return ResponseEntity.ok().body("Note Deleted Successfully!!");
     }
 
-    @PutMapping("/updatepen/{penId}")
+    @PutMapping("/update/{penId}")
     public ResponseEntity<PenDTO> updatePen(@PathVariable Long penId,
                                          @RequestBody PenDTO pen){
         PenDTO pen1 = penService.updatePen(penId, pen);

@@ -10,18 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class NoteController {
 
     @Autowired
     private NoteService noteService;
 
     private NoteDTO noteDTO;
-
-    @GetMapping("/dinesh")
-    public String hello(){
-
-        return "Hello Dinesh!";
-    }
 
     @PostMapping("/createNote")
     public ResponseEntity<NoteDTO> create(@RequestBody NoteDTO noteDTO){
